@@ -14,6 +14,8 @@ class Machine
 {
 private:
     bool verbose = false;
+    Mapper mapper;
+
 public:
     Machine();
     ~Machine();

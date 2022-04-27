@@ -49,7 +49,7 @@ void Machine::test(){
 
 void Machine::printMapping(){
   for(int i = 0; i < 65; i++){
-    std::cout<< Mapper::get_mapping()->at(i);
+    std::cout<< Machine::mapper.Mapper::get_mapping()->at(i);
     if(i%8==0)
       std::cout<< " ";
   }
