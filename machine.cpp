@@ -8,7 +8,6 @@ Date: 4/15/2022
 // In other words, this machine holds the collection of wheels, mappers. 
 // Your program will only need to create one (or two with -t) instances of this class.
 
-#include "mapper.h"
 #include "wheel.h"
 #include "machine.h"
 #include <fstream>
@@ -49,7 +48,7 @@ void Machine::test(){
 
 void Machine::printMapping(){
   for(int i = 0; i < 65; i++){
-    std::cout<< Machine::mapper.Mapper::get_mapping()->at(i);
+    std::cout<< Machine::mapper.Mapper::get_mapping().at(i);
     if(i%8==0)
       std::cout<< " ";
   }

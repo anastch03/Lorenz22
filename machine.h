@@ -9,6 +9,7 @@ Date: 4/15/2022
 
 #include <iostream>
 #include <string>
+#include "mapper.h"
 
 class Machine
 {
