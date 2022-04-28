@@ -17,13 +17,12 @@ class Machine
 private:
     bool verbose = false; //if true, display intermediate steps and wheel settings
     Mapper mapper;
-    WheelAssembly *wheelAssembly;
+    WheelAssembly *wheelAssembly = new WheelAssembly();
 
 public:
     Machine(){}
     ~Machine(){}
     static void help(); 
-    int parseCL() const; //TODO
     std::string encrypt(); //TODO
     std::string decrypt(); //TODO
     void test(); 
@@ -33,7 +32,7 @@ public:
     void setVerbose(bool v){
         verbose = v;
     }
-    WheelAssembly getWheelAssembly(){return *wheelAssembly;}
+    WheelAssembly *getWheelAssembly(){return wheelAssembly;}
 };
 
 

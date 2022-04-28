@@ -16,9 +16,8 @@ std::string Machine::encrypt(){ //TODO
   std::string plain_txt;
   std::cin >> plain_txt;
   std::string cipher_txt;
-
-  Machine::getWheelAssembly().readFile();
-  Machine::getWheelAssembly().printAllWheels();
+  Machine::getWheelAssembly()->readFile();
+  Machine::getWheelAssembly()->printAllWheels();
 
   //encrypt
   // Mapper m;

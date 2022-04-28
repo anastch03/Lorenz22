@@ -17,7 +17,6 @@ Date: 4/15/2022
 #include <string>
 
 void WheelAssembly::readFile() {
-
     std::vector<std::string> fileData;
     // FILE READING FROM https://www.tutorialspoint.com/read-file-line-by-line-using-cplusplus
     std::fstream file;
@@ -32,25 +31,39 @@ void WheelAssembly::readFile() {
     }
 
     std::vector<std::string>::iterator itr = fileData.begin();
-
+    
     for(int i = 0; i < 6; i++) {
-        for(int j = 0; j < 3; j++){
+        for(int j = 0; j < 3; j++) {
             std::string line = *itr++;
+            std::cout << "row, col: " << i << " " << j << std::endl;
             std::string name = line.std::string::substr(0, 2);
             int lastCommaIndex = line.std::string::find_last_of(",");
             std::string settings = line.std::string::substr(lastCommaIndex, (line.length() - lastCommaIndex));
-            get_wheel(i,j)->set_name(name);
+            std::cout << this->get_wheel(i,j)<< std::endl;
+            this->get_wheel(i,j)->set_name(name);
             std::cout << "got name: " << name <<std::endl;
             int length_of_settings = 0;
             for(char c : settings)
             {
                 length_of_settings++;
-                get_wheel(i,j)->add_pin((c == '0') ? 0 : 1);
+                this->get_wheel(i,j)->add_pin((c == '0') ? 0 : 1);
             }
-        
-            // std::cout << "Just finished setting wheels" << 
         }
     }
+    // for(int i = 0; i < 6; i++) {
+    //     for(int j = 0; j < 3; j++){
+    //         // std::cout<< "there\n";
+    //         // if(itr != fileData.end()){
+    //         //     // std::string line = *itr++;
+    //         //     // std::cout<< line <<std::endl;//delete
+    //         //     // std::cout<< *itr; //delete
+                
+    //         // }
+            
+        
+    //         // std::cout << "Just finished setting wheels" << 
+    //     }
+    // }
 }
 
 void WheelAssembly::printAllWheels() {
