@@ -16,12 +16,13 @@ maps ascii characters to 6 bit characters and vice versa.
 
 void Mapper::printMapping(){
   std::cout<< " M: ";
-  for(unsigned int i = 0; i < get_mapping().size(); i++){
-	std::cout<<get_mapping().at(i);
-	if(i%8==0 && i > 0)
-	  std::cout<< " ";
-  }
-  std::cout<<std::endl;
+	int sizeOfMap = get_mapping().size();
+  for(int i = 0; i < sizeOfMap; i++){
+		std::cout<<get_mapping().at(i);
+		if((i+1)%8==0 && i > 0)
+			std::cout<< " ";
+		}
+		std::cout<<std::endl;
 }
 
 std::string Mapper::noPunc(const char * input){ //gets rid of input punctuation 
@@ -56,5 +57,5 @@ int Mapper::bitToAscii(int bit){ //convert ascii value to 6-bit value
 }
 
 void Mapper::rotate(){ //rotate mapping right by 1 
-    std::rotate(Mapper::get_mapping().rbegin(), Mapper::get_mapping().rbegin() + 1, Mapper::get_mapping().rend());
+    std::rotate(get_mapping().rbegin(), get_mapping().rbegin() + 1, get_mapping().rend());
 }

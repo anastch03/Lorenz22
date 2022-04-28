@@ -23,8 +23,7 @@ std::string Machine::encrypt(){ //TODO
     Machine::getWheelAssembly()->printAllWheels();
   }
   const char *plainTxtChar = plain_txt.c_str();
-  
-  std::cout << getMapper()->Mapper::noPunc(plainTxtChar);
+  std::string toBeEncrypted = getMapper()->Mapper::noPunc(plainTxtChar); //string to be encrypted
 
   //encrypt
   // Mapper m;
@@ -39,20 +38,25 @@ std::string Machine::encrypt(){ //TODO
   return cipher_txt;
   
 }
-
-std::string Machine::decrypt(){ //TODO  
+std::string Machine::decrypt_helper(){
+  std::cout<<"Enter text to decrypt:";
   std::string cipher_txt;
   std::cin >> cipher_txt;
+  return cipher_txt;
+}
+
+std::string Machine::decrypt(std::string cipherText){ //TODO  
   std::string plain_txt;
   //decrypt
-  cipher_txt = plain_txt; //temp
+  plain_txt = cipherText; //temp
   return plain_txt;
 }
 
 void Machine::test(){ 
   std::cout<< "Enter text to test:"<<std::endl;
-  std::cout << Machine::encrypt();
-  std::cout << Machine::decrypt();
+  std::string cipherTxt = Machine::encrypt();
+  std::cout << "encrypted text: " << cipherTxt <<std::endl;
+  std::cout << "decrypted text: " << Machine::decrypt(cipherTxt)<<std::endl;
 }
 
 

@@ -22,7 +22,6 @@ int main (int argc, char *argv[]){
         Machine::help();
     }
     if(input.cmdOptionExists("-v")){ //verbose mode
-        std::cout << "verbose mode ON" << std::endl;
         m1->Machine::setVerbose(true);
     }
     if(input.cmdOptionExists("-t")){
@@ -42,10 +41,13 @@ int main (int argc, char *argv[]){
         }
         std::cout<< "Enter text to encrypt:"<<std::endl;
         m1->Machine::encrypt();
+        std::cout<<std::endl;
+        m1->Machine::getMapper()->Mapper::rotate(); //test DNW
+        m1->Machine::getMapper()->Mapper::printMapping(); 
     }
     else if(input.cmdOptionExists("-d")){ //decrypt mode
         std::cout<< "Enter text to decrypt:"<<std::endl;
-        m1->Machine::decrypt();
+        m1->Machine::decrypt(Machine::decrypt_helper());
     }
     else 
         Machine::help();

@@ -27,7 +27,8 @@ public:
     ~Machine(){}
     static void help(); 
     std::string encrypt(); //TODO
-    std::string decrypt(); //TODO
+    std::string decrypt(std::string cipherText); //TODO
+    static std::string decrypt_helper();
     void test();
     Mapper* getMapper(){return mapper;} 
     void printWheelSettings(); 
