@@ -31,10 +31,10 @@ public:
     int get_current_pos(){ return current_position;}
     int get_num_pins(){ return pins.size();  }
     std::vector<int> get_pins() {return pins;}
-    std::string get_name(){ return name; }
+    std::string get_name(){return this->name;}
     void set_current_pos(int pos){current_position = pos;}
-    void set_name(std::string s){ name = s;}
-    void add_pin(int value){pins.push_back(value); }
+    void set_name(std::string name) {this->name = name;}
+    void add_pin(int value){this->pins.push_back(value); }
     void printWheelSettings();
     void increment(); //increment wheel position by 1
 

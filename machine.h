@@ -17,7 +17,7 @@ class Machine
 private:
     bool verbose = false; //if true, display intermediate steps and wheel settings
     Mapper mapper;
-    WheelAssembly wheelAssembly;
+    WheelAssembly *wheelAssembly;
 
 public:
     Machine(){}
@@ -33,7 +33,7 @@ public:
     void setVerbose(bool v){
         verbose = v;
     }
-    WheelAssembly getWheelAssembly(){return wheelAssembly;}
+    WheelAssembly getWheelAssembly(){return *wheelAssembly;}
 };
 
 
