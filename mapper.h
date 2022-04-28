@@ -26,8 +26,8 @@ private:
         'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
 };
 public:
-    Mapper();
-    ~Mapper();
+    Mapper(){}
+    ~Mapper(){}
     std::string noPunc(char *input); 
     int asciiToBit(char c); 
     int bitToAscii(int bit); 
@@ -35,12 +35,6 @@ public:
     std::vector <char> get_mapping(){return mapping;};
 };
 
-Mapper::Mapper()
-{
-}
 
-Mapper::~Mapper()
-{
-}
 
 #endif

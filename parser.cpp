@@ -18,7 +18,7 @@ Date: 4/15/2022
 #include <algorithm>
 #include "parser.h"
 
-//from StackOverflow; author: iain
+//COMMAND LINE PARSING FROM https://stackoverflow.com/questions/865668/parsing-command-line-arguments-in-c
 const std::string& Parser::getCmdOption(const std::string &option) const{
     std::vector<std::string>::const_iterator itr;
     itr =  std::find(this->tokens.begin(), this->tokens.end(), option);

@@ -13,14 +13,16 @@ int main (int argc, char *argv[]){
     //make L22 machine
     Machine *m1 = new Machine();
 
-    //verbose m1->Machine::verbose();
-
-    //settings
+    //settings: 
     // m1->Machine::settings();
 
     //taken from StackOverflow: 
     Parser input(argc, argv); //makes a Parser object 
+    if(input.cmdOptionExists("-h")){ //help mode
+        Machine::help();
+    }
     if(input.cmdOptionExists("-v")){ //verbose mode
+        std::cout << "verbose mode ON" << std::endl;
         m1->Machine::setVerbose(true);
     }
     if(input.cmdOptionExists("-t")){
@@ -45,6 +47,8 @@ int main (int argc, char *argv[]){
         std::cout<< "Enter text to decrypt:"<<std::endl;
         m1->Machine::decrypt();
     }
+    else 
+        Machine::help();
     
     // else if(input.cmdOptionExists("-s")){
     // const std::string &filename = input.getCmdOption("-f");
