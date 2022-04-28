@@ -12,12 +12,19 @@ Date: 4/15/2022
 #include "machine.h"
 #include <fstream>
 
+
 std::string Machine::encrypt(){ //TODO 
   std::string plain_txt;
   std::cin >> plain_txt;
   std::string cipher_txt;
-  Machine::getWheelAssembly()->readFile();
-  Machine::getWheelAssembly()->printAllWheels();
+  if (Machine::get_verbose()){
+    Machine::getMapper()->printMapping();
+    Machine::getWheelAssembly()->readFile();
+    Machine::getWheelAssembly()->printAllWheels();
+  }
+  const char *plainTxtChar = plain_txt.c_str();
+  
+  std::cout << getMapper()->Mapper::noPunc(plainTxtChar);
 
   //encrypt
   // Mapper m;
@@ -38,7 +45,7 @@ std::string Machine::decrypt(){ //TODO
   std::cin >> cipher_txt;
   std::string plain_txt;
   //decrypt
-  std::cin >> plain_txt; //temp
+  cipher_txt = plain_txt; //temp
   return plain_txt;
 }
 
@@ -48,13 +55,6 @@ void Machine::test(){
   std::cout << Machine::decrypt();
 }
 
-void Machine::printMapping(){
-  for(int i = 0; i < 65; i++){
-	std::cout<< Machine::mapper.Mapper::get_mapping().at(i);
-	if(i%8==0)
-	  std::cout<< " ";
-  }
-}
 
 void Machine::help(){
   std::cout<<"Usage: l22 [options]"<<std::endl

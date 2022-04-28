@@ -28,10 +28,11 @@ private:
 public:
     Mapper(){}
     ~Mapper(){}
-    std::string noPunc(char *input); 
+    std::string noPunc(const char *input); 
     int asciiToBit(char c); 
     int bitToAscii(int bit); 
     void rotate();
+    void printMapping();
     std::vector <char> get_mapping(){return mapping;};
 };
 

@@ -24,7 +24,6 @@ void WheelAssembly::readFile() {
     if (file.is_open()){   //checking whether the file is open
         std::string tp;
         while(std::getline(file, tp)){ //read data from file object and put it into string.
-            std::cout << "READ: " << tp << std::endl;
             fileData.push_back(tp); //print the data of the string
         }
         file.close(); //close the file object.
@@ -35,13 +34,10 @@ void WheelAssembly::readFile() {
     for(int i = 0; i < 6; i++) {
         for(int j = 0; j < 3; j++) {
             std::string line = *itr++;
-            std::cout << "row, col: " << i << " " << j << std::endl;
             std::string name = line.std::string::substr(0, 2);
-            int lastCommaIndex = line.std::string::find_last_of(",");
+            int lastCommaIndex = line.std::string::find_last_of(",")+1;
             std::string settings = line.std::string::substr(lastCommaIndex, (line.length() - lastCommaIndex));
-            std::cout << this->get_wheel(i,j)<< std::endl;
             this->get_wheel(i,j)->set_name(name);
-            std::cout << "got name: " << name <<std::endl;
             int length_of_settings = 0;
             for(char c : settings)
             {
@@ -71,10 +67,10 @@ void WheelAssembly::printAllWheels() {
     // get each wheel
     for (int i = 0; i < 6; i++) {
         for(int j = 0; j< 3; j++){
-            std::cout<< "this wheel's name is " << WheelAssembly::get_wheel(i, j)->get_name()<<std::endl;
-            WheelAssembly::get_wheel(i, j)->printWheelSettings();
+            WheelAssembly::get_wheel(i, j)->printWheelSettings(); //print wheel settings
         }
     }
+
 
 }
 

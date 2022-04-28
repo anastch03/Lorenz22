@@ -6,6 +6,7 @@ Date: 4/15/2022
 
 #include <iostream>
 #include "wheel.h"
+#include "color.h"
 
 //TODO
 
@@ -17,10 +18,15 @@ void Wheel::increment(){
 
 void Wheel::printWheelSettings(){
     std::cout << Wheel::get_name() << ": ";
-    for(int i : Wheel::get_pins())
-    {
-        // TODO: if this is the current_index, then color green
-        std::cout << i;
+    for(unsigned int i = 0; i < Wheel::get_pins().size(); i++) {
+        //if this is the current_index, then color green
+        if(i == (unsigned int) Wheel::get_current_pos()) {
+            //set color green
+            std::cout << Color::setFg(Color::green)<< get_pins().at(i)<<Color::setFg(Color::white);
+            //set color white
+        } else {
+            std::cout << get_pins().at(i);
+        }
     }
     std::cout<< std::endl;
 }

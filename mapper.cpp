@@ -14,10 +14,19 @@ maps ascii characters to 6 bit characters and vice versa.
 #include <iostream>
 #include <algorithm>
 
+void Mapper::printMapping(){
+  std::cout<< " M: ";
+  for(unsigned int i = 0; i < get_mapping().size(); i++){
+	std::cout<<get_mapping().at(i);
+	if(i%8==0 && i > 0)
+	  std::cout<< " ";
+  }
+  std::cout<<std::endl;
+}
 
-std::string Mapper::noPunc(char *input){ //gets rid of input punctuation 
+std::string Mapper::noPunc(const char * input){ //gets rid of input punctuation 
     std::string cipherText;
-    for(char *i = input; *i != '\0'; i++)
+    for(const char *i = input; *i != '\0'; i++)
     {
         if(*i == '\r' || *i == '\t'){
             cipherText += " ";

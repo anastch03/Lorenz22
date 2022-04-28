@@ -21,7 +21,7 @@ Date: 4/15/2022
 class Wheel
 {
 private:
-    int current_position;
+    int current_position = 0;
     std::string pin_settings;
     std::string name;
     std::vector<int> pins; //pin status (1 or 0) (size of vector = num_pins)
