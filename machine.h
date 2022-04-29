@@ -23,12 +23,14 @@ public:
     Machine(){
         this->mapper = new Mapper();
         this->wheelAssembly = new WheelAssembly();
+        getWheelAssembly()->readFile(); //read wheel settings and stores wheel setting info to each wheel
     }
     ~Machine(){}
     static void help(); 
     std::string encrypt(); //TODO
     static void convertToBit(char c, std::vector<int> *bitVect);
     static int bitToDec(std::vector<int> *bitVect);
+    static std::string decToHex(int decimal);
     std::string decrypt(std::string cipherText); //TODO
     static std::string decrypt_helper();
     void test();
