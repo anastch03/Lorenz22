@@ -33,13 +33,11 @@ int Machine::binaryToDec(std::vector<int> *bitVect){
   return num;
 }
 
-std::string Machine::encrypt(){ //TODO: increment mapping based on intermbits
-  std::string plain_txt;
-  std::getline(std::cin, plain_txt);
+std::string Machine::encrypt(std::string plain_txt){ 
   std::string cipher_txt = "";
-  if (Machine::get_verbose()){
-    Machine::getMapper()->printMapping();
-    Machine::getWheelAssembly()->printAllWheels();
+  if (get_verbose()){
+    getMapper()->printMapping();
+    getWheelAssembly()->printAllWheels();
   }
   const char *plainTxtChar = plain_txt.c_str(); //converts string to const char*
   std::string toBeEncrypted = getMapper()->Mapper::noPunc(plainTxtChar); //string to be encrypted
@@ -72,20 +70,20 @@ std::string Machine::encrypt(){ //TODO: increment mapping based on intermbits
     getWheelAssembly()->WheelAssembly::incrementAll();
     if(get_verbose())
     {
-      Machine::getWheelAssembly()->printAllWheels();
+      getWheelAssembly()->printAllWheels();
     }
 
     //increment wheels based on intermediate bits
     if(get_verbose())
     {
-      std::cout << ibitsInHex<< "=";
+      std::cout << ibitsInHex << "=";
       for(int b : *intermBits)
         std::cout<< b;
-      std::cout << " "<<Machine::getWheelAssembly()->increment_i(*intermBits)<<std::endl;
-      Machine::getWheelAssembly()->printAllWheels();
+      std::cout << " "<<getWheelAssembly()->increment_i(*intermBits)<<std::endl;
+      getWheelAssembly()->printAllWheels();
     }
     else
-      Machine::getWheelAssembly()->increment_i(*intermBits);
+      getWheelAssembly()->increment_i(*intermBits);
       
     
 
@@ -124,10 +122,14 @@ std::string Machine::decrypt(std::string cipherText){ //TODO
 
 void Machine::test(){ 
   std::cout<< "Enter text to test:"<<std::endl;
-  std::string cipherTxt = Machine::encrypt();
-  std::cout << "encrypted text: " << cipherTxt <<std::endl;
-  std::cout << "decrypted text: " << Machine::decrypt(cipherTxt)<<std::endl;
-  //TODO if strings match, print strings match
+  std::string plain_txt;
+  std::getline(std::cin, plain_txt);
+  std::string cipherTxt = encrypt(plain_txt);
+  std::string decrypted =  decrypt(cipherTxt);
+  if(plain_txt.compare(decrypted))
+    std::cout<<"String match";
+  else
+    std::cout<<"String DO NOT match";
 }
 
 void Machine::help(){
@@ -140,6 +142,25 @@ void Machine::help(){
 		  <<"-i <settings> set initial wheel settings"<<std::endl
 		  <<"-t            test (encrypt, then decrypt)" <<std::endl
 		  <<"<settings> is a string used to set the wheels."<<std::endl;
+}
+
+void Machine::settings(const char * settings){
+  std::cout << "settings: "<< settings <<"\n";
+  const int MAX = 18;
+  int j = 0;
+  int k = 0;
+  int num_of_pins;
+  int new_pos;
+  int c;
+  for(int i = 1; settings[i] != '\0' && i <= MAX; i++){
+    num_of_pins = getWheelAssembly()->get_wheel(j,k)->get_num_pins();
+    c = (int)(settings[i-1]);
+    new_pos = c%num_of_pins;
+    getWheelAssembly()->get_wheel(j,k)->set_current_pos(new_pos);
+    j = i/3;
+    k = (k+1)%3;
+  }
+  std::cout<<"\n";
 }
 
 //DECIMAL TO HEX FUNCTION FROM https://www.educative.io/edpresso/how-to-convert-a-number-from-decimal-to-hexadecimal-in-cpp

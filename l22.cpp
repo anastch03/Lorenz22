@@ -13,10 +13,7 @@ int main (int argc, char *argv[]){
     //make L22 machine
     Machine *m1 = new Machine();
 
-    //settings: 
-    // m1->Machine::settings();
-
-    //taken from StackOverflow: 
+    //COMMAND LINE PARSING FROM https://stackoverflow.com/questions/865668/parsing-command-line-arguments-in-c
     Parser input(argc, argv); //makes a Parser object 
     if(input.cmdOptionExists("-h") || argc < 2){ //help mode
         Machine::help();
@@ -41,10 +38,13 @@ int main (int argc, char *argv[]){
         }
         if(input.cmdOptionExists("-s"))
         {
-            //set to wheels to custom setting
+            const std::string &settings = input.getCmdOption("-s");
+            m1->Machine::settings(settings.c_str());
         }
         std::cout<< "Enter text to encrypt:"<<std::endl;
-        std::string cipherText = m1->Machine::encrypt();
+        std::string plain_txt;
+        std::getline(std::cin, plain_txt);
+        std::string cipherText = m1->Machine::encrypt(plain_txt);
         int count = 0;
         for(char c : cipherText)
         {
@@ -61,7 +61,7 @@ int main (int argc, char *argv[]){
     else if(input.cmdOptionExists("-d")){ //decrypt mode
         if(input.cmdOptionExists("-s"))
         {
-            //set to wheels to custom setting
+            m1->Machine::settings(input.getCmdOption("-f").c_str());
         }
         std::cout<< "Enter text to decrypt:"<<std::endl;
         m1->Machine::decrypt(Machine::decrypt_helper());

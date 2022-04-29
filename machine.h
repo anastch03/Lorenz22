@@ -28,16 +28,16 @@ public:
     ~Machine(){}
     static void help(); 
     
-    std::string encrypt(); //TODO
+    std::string encrypt(std::string plain_txt); 
     static void convertToBinary(int num, std::vector<int> *bitVect);
     static int binaryToDec(std::vector<int> *bitVect);
     static std::string decToHex(int decimal);
     std::string decrypt(std::string cipherText); //TODO
     static std::string decrypt_helper();
-    void test();
+    void test(); //TODO
     Mapper* getMapper(){return mapper;} 
     void printWheelSettings(); 
-    void settings(); //TODO
+    void settings(const char * settings); //TODO
     void setVerbose(bool v){verbose = v;}
     bool get_verbose(){return verbose;}
     WheelAssembly *getWheelAssembly(){return wheelAssembly;}
