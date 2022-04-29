@@ -8,7 +8,6 @@ Date: 4/15/2022
 #include "machine.h"
 #include "parser.h"
 
-//PROBLEMS: always printing "U" in encyption
 int main (int argc, char *argv[]){ 
 
     //make L22 machine
@@ -40,11 +39,19 @@ int main (int argc, char *argv[]){
             Machine::help();
             return 1;
         }
+        if(input.cmdOptionExists("-s"))
+        {
+            //set to wheels to custom setting
+        }
         std::cout<< "Enter text to encrypt:"<<std::endl;
         std::cout<< m1->Machine::encrypt() << std::endl;
 
     }
     else if(input.cmdOptionExists("-d")){ //decrypt mode
+        if(input.cmdOptionExists("-s"))
+        {
+            //set to wheels to custom setting
+        }
         std::cout<< "Enter text to decrypt:"<<std::endl;
         m1->Machine::decrypt(Machine::decrypt_helper());
     }

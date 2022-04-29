@@ -20,7 +20,7 @@ class WheelAssembly{
     enum set{A, B, C};
     void readFile(); //create wheels based on settings in wheel.txt
     void read_settings(); //read initial wheel settings from -i
-    void increment_i(std::vector<int> *i); //increment wheel position based on table from step 11
+    std::string increment_i(std::vector<int> bits); //increment wheel position based on table from step 11
     void incrementAll(); //increment all wheels by 1
     Wheel *get_wheel(int i, int j){ return &(wheels[i][j]); }
     void printAllWheels();

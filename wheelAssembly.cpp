@@ -73,8 +73,40 @@ void WheelAssembly::read_settings(){ //read initial wheel settings from -i
     //TODO
 }
 
-void WheelAssembly::increment_i(std::vector<int> *i) { //increment wheel position based on table from step 11
-
+std::string WheelAssembly::increment_i(std::vector<int> bits) { //increment wheel position based on table from step 11
+    std::string str;
+    for(int i = 0; i < 6; i++)
+    {
+      int c = (i + 1)%6;
+      for(int j = 0; j < 3; j++){
+        if((i == 3 && c == 0)||(i == 4 && c == 1)||(i==5 && c==2)){
+            if (bits.at(i) | bits.at(c)){
+                get_wheel(5-i, j)->Wheel::increment();
+                str+="++W";  
+                if(j == 0)
+                    str+="A";
+                else if(j == 1)
+                    str+="B";
+                else 
+                    str+="C";
+                str+= std::to_string(5-i)+ "[i"+ std::to_string(i)+" | i"+std::to_string(c)+"] ";
+            }
+        }
+        else if(bits.at(i) & bits.at(c)){
+            get_wheel(5-i, j)->Wheel::increment();
+            str+="++W";  
+            if(j == 0)
+                str+="A";
+            else if(j == 1)
+                str+="B";
+            else 
+                str+="C";
+            str+=std::to_string(5-i)+ "[i"+ std::to_string(i)+" & i"+std::to_string(c)+"] ";
+        }
+        c = (c+1)%6;
+      }
+    }
+    return str;
 }
 
 void WheelAssembly::incrementAll() { //increment all wheels by 1

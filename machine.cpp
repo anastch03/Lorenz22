@@ -33,7 +33,7 @@ int Machine::binaryToDec(std::vector<int> *bitVect){
   return num;
 }
 
-std::string Machine::encrypt(){ //TODO 
+std::string Machine::encrypt(){ //TODO: increment mapping based on intermbits
   std::string plain_txt;
   std::getline(std::cin, plain_txt);
   std::string cipher_txt = "";
@@ -60,7 +60,6 @@ std::string Machine::encrypt(){ //TODO
     std::string ibitsInHex = decToHex(binaryToDec(intermBits));
     if(get_verbose())
     {
-      //make vector from wheel settings TODO
       std::string A = decToHex(binaryToDec(getWheelAssembly()->getWheelVector(WheelAssembly::A)));
       std::string B = decToHex(binaryToDec(getWheelAssembly()->getWheelVector(WheelAssembly::B)));
       std::string C = decToHex(binaryToDec(getWheelAssembly()->getWheelVector(WheelAssembly::C)));
@@ -69,7 +68,6 @@ std::string Machine::encrypt(){ //TODO
       std::cout<< "f("<< c << ")=" << hex <<" "<<hex<<"^"<<A<<"^"<<B<<"^"<<C<<"="<< ibitsInHex <<std::endl;
 
     }
-    // 
     //increment all wheels
     getWheelAssembly()->WheelAssembly::incrementAll();
     if(get_verbose())
@@ -78,12 +76,17 @@ std::string Machine::encrypt(){ //TODO
     }
 
     //increment wheels based on intermediate bits
-    Machine::getWheelAssembly()->increment_i(intermBits);
     if(get_verbose())
     {
-      //print verbose operations for increment_i TODO
+      std::cout << ibitsInHex<< "=";
+      for(int b : *intermBits)
+        std::cout<< b;
+      std::cout << " "<<Machine::getWheelAssembly()->increment_i(*intermBits)<<std::endl;
       Machine::getWheelAssembly()->printAllWheels();
     }
+    else
+      Machine::getWheelAssembly()->increment_i(*intermBits);
+      
     
 
     //convert intermediate bits to decimal number
@@ -92,12 +95,12 @@ std::string Machine::encrypt(){ //TODO
     //convert decimal number to ascii with same mapping & 
     //add ascii char to string 
     cipher_txt += getMapper()->Mapper::bitToAscii(dec);
+    //rotate mapping 
+    getMapper()->rotate();
+
     if(get_verbose())
       std::cout<<"f-1("<< ibitsInHex << ")=" <<(char)getMapper()->Mapper::bitToAscii(dec)<<std::endl;
   }
-
-  //rotate mapping 
-  getMapper()->rotate();
 
   //convert any spaces in char vector to '-'
   const char *cipherTxtChar = cipher_txt.c_str();
