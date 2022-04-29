@@ -25,6 +25,20 @@ void Machine::convertToBinary(int num, std::vector<int> *bitVect){ //takes an em
   convertToBinary(num/2, bitVect);
 }
 
+void Machine::test(){ 
+  std::cout<< "Enter text to test:"<<std::endl;
+  std::string plain_txt;
+  std::getline(std::cin, plain_txt);
+  std::string cipherTxt = encrypt(plain_txt);
+  std::string decrypted =  decrypt(cipherTxt);
+  std::cout << cipherTxt<<"\n";
+  std::cout << decrypted<<"\n";
+  if(plain_txt.compare(decrypted))
+    std::cout<<"String match\n";
+  else
+    std::cout<<"String DO NOT match\n";
+}
+
 int Machine::binaryToDec(std::vector<int> *bitVect){
   int num = 0;
   for(int i = 0; i < 6; i++){
@@ -120,17 +134,6 @@ std::string Machine::decrypt(std::string cipherText){ //TODO
   return plain_txt;
 }
 
-void Machine::test(){ 
-  std::cout<< "Enter text to test:"<<std::endl;
-  std::string plain_txt;
-  std::getline(std::cin, plain_txt);
-  std::string cipherTxt = encrypt(plain_txt);
-  std::string decrypted =  decrypt(cipherTxt);
-  if(plain_txt.compare(decrypted))
-    std::cout<<"String match";
-  else
-    std::cout<<"String DO NOT match";
-}
 
 void Machine::help(){
   std::cout<<"Usage: l22 [options]"<<std::endl
