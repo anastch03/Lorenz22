@@ -16,9 +16,9 @@ maps ascii characters to 6 bit characters and vice versa.
 
 void Mapper::printMapping(){
   std::cout<< " M: ";
-	int sizeOfMap = get_mapping().size();
+	int sizeOfMap = get_mapping()->size();
   for(int i = 0; i < sizeOfMap; i++){
-		std::cout<<get_mapping().at(i);
+		std::cout<<get_mapping()->at(i);
 		if((i+1)%8==0 && i > 0)
 			std::cout<< " ";
 		}
@@ -34,7 +34,7 @@ std::string Mapper::noPunc(const char * input){ //gets rid of input punctuation
         }
         else{
             for(int j = 0; j < 64; j++){
-                if(Mapper::get_mapping().at(j) == *i)
+                if(Mapper::get_mapping()->at(j) == *i)
                 {
                     cipherText += *i;
                     break;
@@ -48,14 +48,14 @@ std::string Mapper::noPunc(const char * input){ //gets rid of input punctuation
 int Mapper::asciiToBit(char c){ //convert a char's ascii value to 6-bit value 
     //find char in vector then return index
     std::vector<char>::iterator i;
-    i = std::find(Mapper::get_mapping().begin(), Mapper::get_mapping().end(), c);
-    return std::distance(Mapper::get_mapping().begin(), i);
+    i = std::find(Mapper::get_mapping()->begin(), Mapper::get_mapping()->end(), c);
+    return std::distance(Mapper::get_mapping()->begin(), i);
 }
 
 int Mapper::bitToAscii(int bit){ //convert ascii value to 6-bit value 
-    return Mapper::get_mapping().at(bit);
+    return Mapper::get_mapping()->at(bit);
 }
 
 void Mapper::rotate(){ //rotate mapping right by 1 
-    std::rotate(get_mapping().rbegin(), get_mapping().rbegin() + 1, get_mapping().rend());
+    std::rotate(get_mapping()->rbegin(), get_mapping()->rbegin() + 1, get_mapping()->rend());
 }

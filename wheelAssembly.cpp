@@ -46,20 +46,6 @@ void WheelAssembly::readFile() {
             }
         }
     }
-    // for(int i = 0; i < 6; i++) {
-    //     for(int j = 0; j < 3; j++){
-    //         // std::cout<< "there\n";
-    //         // if(itr != fileData.end()){
-    //         //     // std::string line = *itr++;
-    //         //     // std::cout<< line <<std::endl;//delete
-    //         //     // std::cout<< *itr; //delete
-                
-    //         // }
-            
-        
-    //         // std::cout << "Just finished setting wheels" << 
-    //     }
-    // }
 }
 
 void WheelAssembly::printAllWheels() {
@@ -78,7 +64,7 @@ void WheelAssembly::read_settings(){ //read initial wheel settings from -i
     //TODO
 }
 
-void WheelAssembly::increment_i() { //increment wheel position based on table from step 11
+void WheelAssembly::increment_i(std::vector<int> *i) { //increment wheel position based on table from step 11
 
 }
 

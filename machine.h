@@ -27,6 +27,7 @@ public:
     }
     ~Machine(){}
     static void help(); 
+    
     std::string encrypt(); //TODO
     static void convertToBit(char c, std::vector<int> *bitVect);
     static int bitToDec(std::vector<int> *bitVect);

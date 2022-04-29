@@ -42,8 +42,6 @@ int main (int argc, char *argv[]){
         std::cout<< "Enter text to encrypt:"<<std::endl;
         m1->Machine::encrypt();
         std::cout<<std::endl;
-        m1->Machine::getMapper()->Mapper::rotate(); //test DNW
-        m1->Machine::getMapper()->Mapper::printMapping(); 
     }
     else if(input.cmdOptionExists("-d")){ //decrypt mode
         std::cout<< "Enter text to decrypt:"<<std::endl;

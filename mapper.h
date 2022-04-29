@@ -33,7 +33,7 @@ public:
     int bitToAscii(int bit); 
     void rotate();
     void printMapping();
-    std::vector <char> get_mapping(){return mapping;};
+    std::vector <char> *get_mapping(){return &mapping;};
 };
 
 

@@ -54,7 +54,7 @@ int Machine::bitToDec(std::vector<int> *bitVect){
 std::string Machine::encrypt(){ //TODO 
   std::string plain_txt;
   std::cin >> plain_txt;
-  std::string cipher_txt;
+  std::string cipher_txt = "";
   if (Machine::get_verbose()){
     Machine::getMapper()->printMapping();
     Machine::getWheelAssembly()->printAllWheels();
@@ -76,21 +76,39 @@ std::string Machine::encrypt(){ //TODO
     for(int i = 0; i < 6; i++){
       intermBits->push_back(getWheelAssembly()->get_wheel(i, WheelAssembly::A)->get_current_pin() ^ getWheelAssembly()->get_wheel(i, WheelAssembly::B)->get_current_pin() ^ getWheelAssembly()->get_wheel(i, WheelAssembly::C)->get_current_pin()); 
     }
+    if(get_verbose())
+    {
+      //make vector from wheel settings TODO
+      //print xor operations
+    }
 
     //increment all wheels
     getWheelAssembly()->WheelAssembly::incrementAll();
-    if(verbose)
+    if(get_verbose())
     {
       Machine::getWheelAssembly()->printAllWheels();
     }
+
     //increment wheels based on intermediate bits
+    Machine::getWheelAssembly()->increment_i(intermBits);
+    if(get_verbose())
+    {
+      //print verbose operations for increment_i TODO
+      Machine::getWheelAssembly()->printAllWheels();
+    }
+    
 
     //convert intermediate bits to decimal number
-    //convert decimal number to ascii with same mapping
-    //add ascii char to char vector (this will later be converted to std::string as the cipher text)
+    int dec = bitToDec(intermBits);
+
+    //convert decimal number to ascii with same mapping & 
+    //add ascii char to string 
+    cipher_txt += getMapper()->Mapper::bitToAscii(dec);
   }
 
-  //rotate mapping
+  //rotate mapping BUGGED
+  getMapper()->rotate();
+  getMapper()->printMapping();
   //convert any spaces in char vector to '-' (f-1 or something look back at steps)
   //convert the char vector to string
   // cipher_txt = plain_txt; //temp/
@@ -119,7 +137,6 @@ void Machine::test(){
   std::cout << "decrypted text: " << Machine::decrypt(cipherTxt)<<std::endl;
   //TODO if strings match, print strings match
 }
-
 
 void Machine::help(){
   std::cout<<"Usage: l22 [options]"<<std::endl
