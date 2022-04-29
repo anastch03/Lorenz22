@@ -99,7 +99,7 @@ std::string Machine::encrypt(){ //TODO: increment mapping based on intermbits
     getMapper()->rotate();
 
     if(get_verbose())
-      std::cout<<"f-1("<< ibitsInHex << ")=" <<(char)getMapper()->Mapper::bitToAscii(dec)<<std::endl;
+      std::cout<<"f-1("<< ibitsInHex << ")=" << (char)(getMapper()->Mapper::bitToAscii(dec)-1)<<std::endl;
   }
 
   //convert any spaces in char vector to '-'

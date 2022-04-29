@@ -44,7 +44,18 @@ int main (int argc, char *argv[]){
             //set to wheels to custom setting
         }
         std::cout<< "Enter text to encrypt:"<<std::endl;
-        std::cout<< m1->Machine::encrypt() << std::endl;
+        std::string cipherText = m1->Machine::encrypt();
+        int count = 0;
+        for(char c : cipherText)
+        {
+            if (count == 5){
+                count = 0;
+                std::cout <<" ";
+            }
+            std::cout<< c;
+            count++;
+        }
+        std::cout<<std::endl;
 
     }
     else if(input.cmdOptionExists("-d")){ //decrypt mode
