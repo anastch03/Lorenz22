@@ -29,6 +29,7 @@ public:
     Wheel(){}
     ~Wheel(){}
     int get_current_pos(){ return current_position;}
+    int get_current_pin();
     int get_num_pins(){ return pins.size();  }
     std::vector<int> get_pins() {return pins;}
     std::string get_name(){return this->name;}

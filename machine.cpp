@@ -11,7 +11,25 @@ Date: 4/15/2022
 #include "wheel.h"
 #include "machine.h"
 #include <fstream>
+#include <cmath> 
 
+
+void Machine::convertToBit(char c, std::vector<int> *bitVect){ //takes an empty int vector and add each bit of c to vector (lsb first)
+  if(c <= 1){
+    bitVect->push_back(c%2);
+    return;
+  }
+  bitVect->push_back(c%2);
+  convertToBit(c/2, bitVect);
+}
+
+int Machine::bitToDec(std::vector<int> *bitVect){
+  int num = 0;
+  for(int i = 0; i < 6; i++){
+    num += bitVect->at(i) * pow(2, i);
+  }
+  return num;
+}
 
 std::string Machine::encrypt(){ //TODO 
   std::string plain_txt;
@@ -19,11 +37,37 @@ std::string Machine::encrypt(){ //TODO
   std::string cipher_txt;
   if (Machine::get_verbose()){
     Machine::getMapper()->printMapping();
-    Machine::getWheelAssembly()->readFile();
+    Machine::getWheelAssembly()->readFile(); //read wheel settings and stores wheel setting info to each wheel
     Machine::getWheelAssembly()->printAllWheels();
   }
   const char *plainTxtChar = plain_txt.c_str();
   std::string toBeEncrypted = getMapper()->Mapper::noPunc(plainTxtChar); //string to be encrypted
+  
+  //for each char of toBeEncypted,
+  std::vector<int> *bit = new std::vector<int>;
+  
+  for(char c : toBeEncrypted){
+    //convert char to map number based on mapping & convert number to 6 bits and store in bit vector (lsb first)
+    std::vector<int> *bitVect = new std::vector<int>;
+    int iBit[6];
+    convertToBit(getMapper()->asciiToBit(c), bit);
+    for (unsigned int i = bit->size(); i < 6; i++)
+      bit->push_back(0);
+    //for each bit, 
+      //xor with corresponding A, B, C wheels
+      //store the bit in iBit[6] array
+    for(int i = 0; i < 6; i++){
+      iBit[i] = getWheelAssembly()->get_wheel(i, WheelAssembly::A)->get_current_pin() ^ getWheelAssembly()->get_wheel(i, WheelAssembly::B)->get_current_pin() ^ getWheelAssembly()->get_wheel(i, WheelAssembly::C)->get_current_pin();
+    }
+    //increment all wheels
+    //increment wheels based on intermediate bits
+    //convert intermediate bits to decimal number
+    //convert decimal number to ascii with same mapping
+    //add ascii char to char vector (this will later be converted to std::string as the cipher text)
+  }
+  //rotate mapping
+  //convert any spaces in char vector to '-' (f-1 or something look back at steps)
+  //convert the char vector to string
 
   //encrypt
   // Mapper m;
@@ -38,6 +82,7 @@ std::string Machine::encrypt(){ //TODO
   return cipher_txt;
   
 }
+
 std::string Machine::decrypt_helper(){
   std::cout<<"Enter text to decrypt:";
   std::string cipher_txt;
@@ -57,6 +102,7 @@ void Machine::test(){
   std::string cipherTxt = Machine::encrypt();
   std::cout << "encrypted text: " << cipherTxt <<std::endl;
   std::cout << "decrypted text: " << Machine::decrypt(cipherTxt)<<std::endl;
+  //TODO if strings match, print strings match
 }
 
 

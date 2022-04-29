@@ -17,6 +17,7 @@ class WheelAssembly{
     public:
     WheelAssembly(){}
     ~WheelAssembly(){}
+    enum {A, B, C};
     void readFile(); //create wheels based on settings in wheel.txt
     void read_settings(); //read initial wheel settings from -i
     void increment_i(); //increment wheel position based on table from step 11

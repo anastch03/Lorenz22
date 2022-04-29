@@ -27,6 +27,8 @@ public:
     ~Machine(){}
     static void help(); 
     std::string encrypt(); //TODO
+    static void convertToBit(char c, std::vector<int> *bitVect);
+    static int bitToDec(std::vector<int> *bitVect);
     std::string decrypt(std::string cipherText); //TODO
     static std::string decrypt_helper();
     void test();

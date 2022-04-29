@@ -15,6 +15,9 @@ void Wheel::increment(){
     Wheel::set_current_pos(Wheel::get_current_pos()%Wheel::get_num_pins());
 }
 
+int Wheel::get_current_pin(){
+    return get_pins().at(get_current_pos());
+}
 
 void Wheel::printWheelSettings(){
     std::cout << Wheel::get_name() << ": ";
