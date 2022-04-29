@@ -25,7 +25,7 @@ void Mapper::printMapping(){
 		std::cout<<std::endl;
 }
 
-std::string Mapper::noPunc(const char * input){ //gets rid of input punctuation 
+std::string Mapper::noPunc(const char *input){ //gets rid of input punctuation 
     std::string cipherText;
     for(const char *i = input; *i != '\0'; i++)
     {
@@ -45,6 +45,19 @@ std::string Mapper::noPunc(const char * input){ //gets rid of input punctuation
     return cipherText;
 }
 
+std::string Mapper::fmap2(const char *input){ //gets rid of spaces and replace with '-'
+    std::string str = "";
+    for(const char *i = input; *i != '\0'; i++)
+    {
+        if(*i == ' '){
+            str += "-";
+        }
+        else
+            str += *i;
+    }
+    return str;
+}
+
 int Mapper::asciiToBit(char c){ //convert a char's ascii value to 6-bit value 
     //find char in vector then return index
     std::vector<char>::iterator i;
@@ -57,5 +70,7 @@ int Mapper::bitToAscii(int bit){ //convert ascii value to 6-bit value
 }
 
 void Mapper::rotate(){ //rotate mapping right by 1 
-    std::rotate(get_mapping()->rbegin(), get_mapping()->rbegin() + 1, get_mapping()->rend());
+    std::rotate(get_mapping()->rbegin(), get_mapping()->rend() - 1, get_mapping()->rend());
 }
+
+

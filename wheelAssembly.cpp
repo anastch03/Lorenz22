@@ -16,6 +16,14 @@ Date: 4/15/2022
 #include <fstream>
 #include <string>
 
+std::vector<int> *WheelAssembly::getWheelVector(int w){
+    std::vector<int> * vect = new std::vector<int>;
+    for(int i = 0; i< 6; i++){
+        vect->push_back(get_wheel(i,w)->get_current_pin());    
+    }
+    return vect;
+}
+
 void WheelAssembly::readFile() {
     std::vector<std::string> fileData;
     // FILE READING FROM https://www.tutorialspoint.com/read-file-line-by-line-using-cplusplus
@@ -56,6 +64,7 @@ void WheelAssembly::printAllWheels() {
             WheelAssembly::get_wheel(i, j)->printWheelSettings(); //print wheel settings
         }
     }
+    std::cout<<std::endl;
 
 
 }

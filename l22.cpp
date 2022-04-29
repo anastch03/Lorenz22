@@ -8,6 +8,7 @@ Date: 4/15/2022
 #include "machine.h"
 #include "parser.h"
 
+//PROBLEMS: always printing "U" in encyption
 int main (int argc, char *argv[]){ 
 
     //make L22 machine
@@ -18,7 +19,7 @@ int main (int argc, char *argv[]){
 
     //taken from StackOverflow: 
     Parser input(argc, argv); //makes a Parser object 
-    if(input.cmdOptionExists("-h")){ //help mode
+    if(input.cmdOptionExists("-h") || argc < 2){ //help mode
         Machine::help();
     }
     if(input.cmdOptionExists("-v")){ //verbose mode
@@ -40,15 +41,18 @@ int main (int argc, char *argv[]){
             return 1;
         }
         std::cout<< "Enter text to encrypt:"<<std::endl;
-        m1->Machine::encrypt();
-        std::cout<<std::endl;
+        std::cout<< m1->Machine::encrypt() << std::endl;
+
     }
     else if(input.cmdOptionExists("-d")){ //decrypt mode
         std::cout<< "Enter text to decrypt:"<<std::endl;
         m1->Machine::decrypt(Machine::decrypt_helper());
     }
-    else 
+    else {
+        std::cout<< "unknown arguments: " << argv[1]<< std::endl;
         Machine::help();
+    }
+
     
     // else if(input.cmdOptionExists("-s")){
     // const std::string &filename = input.getCmdOption("-f");

@@ -30,7 +30,7 @@ public:
     ~Wheel(){}
     int get_current_pos(){ return current_position;}
     int get_current_pin();
-    int get_num_pins(){ return pins.size();  }
+    int get_num_pins(){ return pins.size();}
     std::vector<int> get_pins() {return pins;}
     std::string get_name(){return this->name;}
     void set_current_pos(int pos){current_position = pos;}
