@@ -34,7 +34,7 @@ public:
     static std::string decToHex(int decimal);
     std::string decrypt(std::string cipherText); //TODO
     static std::string decrypt_helper();
-    void test(); //TODO
+    void test(std::string setting); //TODO
     Mapper* getMapper(){return mapper;} 
     void printWheelSettings(); 
     void settings(const char * settings); //TODO

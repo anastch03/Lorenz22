@@ -25,19 +25,6 @@ void Machine::convertToBinary(int num, std::vector<int> *bitVect){ //takes an em
   convertToBinary(num/2, bitVect);
 }
 
-void Machine::test(){ 
-  std::cout<< "Enter text to test:"<<std::endl;
-  std::string plain_txt;
-  std::getline(std::cin, plain_txt);
-  std::string cipherTxt = encrypt(plain_txt);
-  std::string decrypted =  decrypt(cipherTxt);
-  std::cout << cipherTxt<<"\n";
-  std::cout << decrypted<<"\n";
-  if(plain_txt.compare(decrypted))
-    std::cout<<"String match\n";
-  else
-    std::cout<<"String DO NOT match\n";
-}
 
 int Machine::binaryToDec(std::vector<int> *bitVect){
   int num = 0;
@@ -47,8 +34,24 @@ int Machine::binaryToDec(std::vector<int> *bitVect){
   return num;
 }
 
+void Machine::test(std::string setting){ 
+  std::cout<< "Enter text to test:"<<std::endl;
+  std::string plain_txt;
+  std::getline(std::cin, plain_txt);
+  std::string cipherTxt = encrypt(plain_txt);
+  Machine::settings(setting.c_str());
+  Machine::getWheelAssembly()->resetWheels();
+  std::string decrypted =  decrypt(cipherTxt);
+  std::cout << cipherTxt<<"\n";
+  std::cout << decrypted<<"\n";
+  if(plain_txt.compare(decrypted) == 0)
+    std::cout<<"String match\n";
+  else
+    std::cout<<"String DO NOT match\n";
+}
+
 std::string Machine::decrypt_helper(){
-  std::cout<<"Enter text to decrypt:";
+  std::cout<<"Enter text to decrypt:\n";
   std::string cipher_txt;
   std::cin >> cipher_txt;
   return cipher_txt;
@@ -57,7 +60,66 @@ std::string Machine::decrypt_helper(){
 std::string Machine::decrypt(std::string cipherText){ //TODO  
   std::string plain_txt;
   std::string toBeDecrypted = Mapper::fmap2_d(cipherText.c_str());
+  for(char c : toBeDecrypted){
+    //convert char to map number based on mapping & convert number to 6 bits and store in bit vector (lsb first)
+    std::vector<int> *bits = new std::vector<int>;
+    std::vector<int> *intermBits = new std::vector<int>; 
+    convertToBinary(getMapper()->asciiToBit(c), bits); //converts the mapper number to binary stored in bits vector
+    for (unsigned int i = bits->size(); i < 6; i++) //fills bits vector up to size 6
+      bits->push_back(0); 
+    //for each bit, 
+      //xor with corresponding A, B, C wheels
+      //store the bit in intermBits vector
+    for(int i = 0; i < 6; i++){
+      intermBits->push_back(bits->at(i) ^ getWheelAssembly()->get_wheel(i, WheelAssembly::A)->get_current_pin() ^ getWheelAssembly()->get_wheel(i, WheelAssembly::B)->get_current_pin() ^ getWheelAssembly()->get_wheel(i, WheelAssembly::C)->get_current_pin());
+    }
+    std::string ibitsInHex = decToHex(binaryToDec(intermBits));
+    if(get_verbose())
+    {
+      std::string A = decToHex(binaryToDec(getWheelAssembly()->getWheelVector(WheelAssembly::A)));
+      std::string B = decToHex(binaryToDec(getWheelAssembly()->getWheelVector(WheelAssembly::B)));
+      std::string C = decToHex(binaryToDec(getWheelAssembly()->getWheelVector(WheelAssembly::C)));
+      //print operations
+      std::string hex = decToHex(getMapper()->asciiToBit(c));
+      std::cout<< "f("<< c << ")=" << hex <<" "<<hex<<"^"<<A<<"^"<<B<<"^"<<C<<"="<< ibitsInHex <<std::endl;
+
+    }
+    //increment all wheels
+    getWheelAssembly()->WheelAssembly::incrementAll();
+    if(get_verbose())
+    {
+      getWheelAssembly()->printAllWheels();
+    }
+
+    //increment wheels based on intermediate bits
+    if(get_verbose())
+    {
+      std::cout << ibitsInHex << "=";
+      for(int b : *intermBits)
+        std::cout<< b;
+      std::cout << " "<<getWheelAssembly()->increment_i(*bits)<<std::endl;
+      getWheelAssembly()->printAllWheels();
+    }
+    else
+      getWheelAssembly()->increment_i(*bits);
+      
+    
+
+    //convert intermediate bits to decimal number
+    int dec = binaryToDec(intermBits);
+
+    //convert decimal number to ascii with same mapping & 
+    //add ascii char to string 
+    plain_txt += getMapper()->Mapper::bitToAscii(dec);
+    //rotate mapping 
+      getMapper()->rotate();
+
+    if(get_verbose())
+      std::cout<<"f-1("<< ibitsInHex << ")=" << (char)(getMapper()->Mapper::bitToAscii(dec-1))<<std::endl;
+  }
+  
   return plain_txt;
+
 }
 
 std::string Machine::encrypt(std::string plain_txt){ 

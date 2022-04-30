@@ -27,8 +27,13 @@ int main (int argc, char *argv[]){
             Machine::help();
             return 1;
         }
-        std::cout<< "test mode" <<std::endl;
-        m1->Machine::test();
+        if(input.cmdOptionExists("-i"))
+        {
+            m1->Machine::settings(input.getCmdOption("-i").c_str());
+            m1->Machine::test(input.getCmdOption("-i").c_str());
+        }
+        else
+            m1->Machine::test("");
     }
     else if(input.cmdOptionExists("-e")){ //encrypt mode
         if(input.cmdOptionExists("-d")){
@@ -65,8 +70,8 @@ int main (int argc, char *argv[]){
         }
         else   
             m1->Machine::getWheelAssembly()->resetWheels();
-        std::cout<< "Enter text to decrypt:"<<std::endl;
-        m1->Machine::decrypt(Machine::decrypt_helper());
+        // std::cout<< "Enter text to decrypt:"<<std::endl;
+        std::cout<< m1->Machine::decrypt(Machine::decrypt_helper())<<std::endl;
     }
     else {
         std::cout<< "unknown arguments: " << argv[1]<< std::endl;
