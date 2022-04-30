@@ -58,6 +58,19 @@ std::string Mapper::fmap2(const char *input){ //gets rid of spaces and replace w
     return str;
 }
 
+std::string Mapper::fmap2_d(const char *input){
+    std::string str = "";
+    for(const char *i = input; *i != '\0'; i++)
+    {
+        if(*i == '-'){
+            str += " ";
+        }
+        else
+            str += *i;
+    }
+    return str;
+}
+
 int Mapper::asciiToBit(char c){ //convert a char's ascii value to 6-bit value 
     //find char in vector then return index
     std::vector<char>::iterator i;

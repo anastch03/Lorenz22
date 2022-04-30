@@ -25,6 +25,7 @@ class WheelAssembly{
     Wheel *get_wheel(int i, int j){ return &(wheels[i][j]); }
     void printAllWheels();
     std::vector<int> *getWheelVector(int w); //returns the address of a vector of A, B, and C wheels settings
+    void resetWheels(); //sets all wheel pos to 0;
 };
 
 #endif

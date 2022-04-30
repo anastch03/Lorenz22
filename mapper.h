@@ -30,6 +30,7 @@ public:
     ~Mapper(){}
     std::string noPunc(const char *input); 
     static std::string fmap2(const char *input);
+    static std::string fmap2_d(const char *input);
     int asciiToBit(char c); 
     int bitToAscii(int bit); 
     void rotate();

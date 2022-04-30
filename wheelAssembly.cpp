@@ -109,6 +109,15 @@ std::string WheelAssembly::increment_i(std::vector<int> bits) { //increment whee
     return str;
 }
 
+void WheelAssembly::resetWheels(){
+    for(int i = 0; i < 6; i++)
+    {
+        for(int j = 0; j < 3; j++){
+            get_wheel(i,j)->set_current_pos(0);
+        }
+    }
+}
+
 void WheelAssembly::incrementAll() { //increment all wheels by 1
     for(int i = 0; i < 6; i++)
     {

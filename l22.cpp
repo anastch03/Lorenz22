@@ -36,9 +36,9 @@ int main (int argc, char *argv[]){
             Machine::help();
             return 1;
         }
-        if(input.cmdOptionExists("-s"))
+        if(input.cmdOptionExists("-i"))
         {
-            const std::string &settings = input.getCmdOption("-s");
+            const std::string &settings = input.getCmdOption("-i");
             m1->Machine::settings(settings.c_str());
         }
         std::cout<< "Enter text to encrypt:"<<std::endl;
@@ -59,10 +59,12 @@ int main (int argc, char *argv[]){
 
     }
     else if(input.cmdOptionExists("-d")){ //decrypt mode
-        if(input.cmdOptionExists("-s"))
+        if(input.cmdOptionExists("-i"))
         {
-            m1->Machine::settings(input.getCmdOption("-f").c_str());
+            m1->Machine::settings(input.getCmdOption("-i").c_str());
         }
+        else   
+            m1->Machine::getWheelAssembly()->resetWheels();
         std::cout<< "Enter text to decrypt:"<<std::endl;
         m1->Machine::decrypt(Machine::decrypt_helper());
     }

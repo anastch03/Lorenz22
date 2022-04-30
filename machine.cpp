@@ -47,6 +47,19 @@ int Machine::binaryToDec(std::vector<int> *bitVect){
   return num;
 }
 
+std::string Machine::decrypt_helper(){
+  std::cout<<"Enter text to decrypt:";
+  std::string cipher_txt;
+  std::cin >> cipher_txt;
+  return cipher_txt;
+}
+
+std::string Machine::decrypt(std::string cipherText){ //TODO  
+  std::string plain_txt;
+  std::string toBeDecrypted = Mapper::fmap2_d(cipherText.c_str());
+  return plain_txt;
+}
+
 std::string Machine::encrypt(std::string plain_txt){ 
   std::string cipher_txt = "";
   if (get_verbose()){
@@ -120,19 +133,6 @@ std::string Machine::encrypt(std::string plain_txt){
   
 }
 
-std::string Machine::decrypt_helper(){
-  std::cout<<"Enter text to decrypt:";
-  std::string cipher_txt;
-  std::cin >> cipher_txt;
-  return cipher_txt;
-}
-
-std::string Machine::decrypt(std::string cipherText){ //TODO  
-  std::string plain_txt;
-  //decrypt
-  plain_txt = cipherText; //temp
-  return plain_txt;
-}
 
 
 void Machine::help(){
