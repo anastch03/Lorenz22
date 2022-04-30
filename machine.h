@@ -27,7 +27,7 @@ public:
     }
     ~Machine(){}
     static void help(); 
-    
+    std::string encrypt_or_decrypt(std::string toBeChanged);
     std::string encrypt(std::string plain_txt); 
     static void convertToBinary(int num, std::vector<int> *bitVect);
     static int binaryToDec(std::vector<int> *bitVect);

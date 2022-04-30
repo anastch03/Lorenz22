@@ -50,17 +50,9 @@ void Machine::test(std::string setting){
     std::cout<<"String DO NOT match\n";
 }
 
-std::string Machine::decrypt_helper(){
-  std::cout<<"Enter text to decrypt:\n";
-  std::string cipher_txt;
-  std::cin >> cipher_txt;
-  return cipher_txt;
-}
-
-std::string Machine::decrypt(std::string cipherText){ //TODO  
-  std::string plain_txt;
-  std::string toBeDecrypted = Mapper::fmap2_d(cipherText.c_str());
-  for(char c : toBeDecrypted){
+std::string Machine::encrypt_or_decrypt(std::string toBeChanged){
+  std::string ret_str = "";
+  for(char c : toBeChanged){
     //convert char to map number based on mapping & convert number to 6 bits and store in bit vector (lsb first)
     std::vector<int> *bits = new std::vector<int>;
     std::vector<int> *intermBits = new std::vector<int>; 
@@ -101,7 +93,7 @@ std::string Machine::decrypt(std::string cipherText){ //TODO
       getWheelAssembly()->printAllWheels();
     }
     else
-      getWheelAssembly()->increment_i(*bits);
+      getWheelAssembly()->increment_i(*intermBits);
       
     
 
@@ -110,16 +102,27 @@ std::string Machine::decrypt(std::string cipherText){ //TODO
 
     //convert decimal number to ascii with same mapping & 
     //add ascii char to string 
-    plain_txt += getMapper()->Mapper::bitToAscii(dec);
+    ret_str += getMapper()->Mapper::bitToAscii(dec);
+    if(get_verbose())
+      std::cout<<"f-1("<< ibitsInHex << ")=" << (char)(getMapper()->Mapper::bitToAscii(dec))<<std::endl;
+
     //rotate mapping 
       getMapper()->rotate();
-
-    if(get_verbose())
-      std::cout<<"f-1("<< ibitsInHex << ")=" << (char)(getMapper()->Mapper::bitToAscii(dec-1))<<std::endl;
   }
-  
-  return plain_txt;
+  return ret_str;
+}
 
+
+std::string Machine::decrypt_helper(){
+  std::cout<<"Enter text to decrypt:\n";
+  std::string cipher_txt;
+  std::cin >> cipher_txt;
+  return cipher_txt;
+}
+
+std::string Machine::decrypt(std::string cipherText){ 
+  std::string toBeDecrypted = Mapper::fmap2_d(cipherText.c_str());
+  return encrypt_or_decrypt(toBeDecrypted);
 }
 
 std::string Machine::encrypt(std::string plain_txt){ 
@@ -153,7 +156,6 @@ std::string Machine::encrypt(std::string plain_txt){
       //print operations
       std::string hex = decToHex(getMapper()->asciiToBit(c));
       std::cout<< "f("<< c << ")=" << hex <<" "<<hex<<"^"<<A<<"^"<<B<<"^"<<C<<"="<< ibitsInHex <<std::endl;
-
     }
     //increment all wheels
     getWheelAssembly()->WheelAssembly::incrementAll();
@@ -182,13 +184,13 @@ std::string Machine::encrypt(std::string plain_txt){
     //convert decimal number to ascii with same mapping & 
     //add ascii char to string 
     cipher_txt += getMapper()->Mapper::bitToAscii(dec);
+    if(get_verbose()){
+      char ch = getMapper()->Mapper::bitToAscii(dec);
+      std::cout<<"f-1("<< ibitsInHex << ")=" << ch <<std::endl;
+    }
     //rotate mapping 
-    getMapper()->rotate();
-
-    if(get_verbose())
-      std::cout<<"f-1("<< ibitsInHex << ")=" << (char)(getMapper()->Mapper::bitToAscii(dec)-1)<<std::endl;
+      getMapper()->rotate();
   }
-
   //convert any spaces in char vector to '-'
   const char *cipherTxtChar = cipher_txt.c_str();
   return Mapper::fmap2(cipherTxtChar);
@@ -210,7 +212,6 @@ void Machine::help(){
 }
 
 void Machine::settings(const char * settings){
-  std::cout << "settings: "<< settings <<"\n";
   const int MAX = 18;
   int j = 0;
   int k = 0;
