@@ -1,3 +1,8 @@
+/*
+File: color.h
+*/
+
+
 #ifndef __COLORS_H_
 #define __COLORS_H_
 

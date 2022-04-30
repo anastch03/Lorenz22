@@ -142,8 +142,8 @@ std::string Machine::decrypt(std::string cipherText)
 			std::string hex = decToHex(getMapper()->asciiToBit(c));
 			std::cout << "f(" << c << ")=" << hex << " " << hex << "^" << A << "^" << B << "^" << C << "=" << ibitsInHex << std::endl;
 		}
-		// increment all wheelså
-		getWheelAssembly()->WheelAssembly::incrementAll();
+
+		getWheelAssembly()->WheelAssembly::incrementAll(); // increment all wheels
 		if (get_verbose())
 		{
 			getWheelAssembly()->printAllWheels();
@@ -161,12 +161,10 @@ std::string Machine::decrypt(std::string cipherText)
 		else
 			getWheelAssembly()->increment_i(*bits);
 
-		// convert intermediate bits to decimal number
-		int dec = binaryToDec(intermBits);
+		int dec = binaryToDec(intermBits); // convert intermediate bits to decimal number
 
-		// convert decimal number to ascii with same mapping &
-		// add ascii char to string
-		plain_txt += getMapper()->Mapper::bitToAscii(dec);
+		plain_txt += getMapper()->Mapper::bitToAscii(dec); // convert decimal number to ascii with same mapping &
+														   // add ascii char to string
 
 		// rotate mapping
 		getMapper()->rotate();

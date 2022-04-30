@@ -1,15 +1,13 @@
 /*
+File: wheel.h
+Author: Anastasia Chen
+Date: 4/15/2022
+
     Wheel{
         used to model each of the 18 wheels
         * Wheel settings are part of encryption pipeline
         * Wheel positions are incremented with each character
     }
-*/
-
-/*
-File: wheel.h
-Author: Anastasia Chen
-Date: 4/15/2022
 */
 
 #ifndef WHEEL_H
