@@ -74,10 +74,6 @@ void WheelAssembly::printAllWheels() {
 
 }
 
-void WheelAssembly::read_settings(){ //read initial wheel settings from -i
-    //TODO
-}
-
 std::string WheelAssembly::increment_i(std::vector<int> bits) { //increment wheel position based on table from step 11
     std::string str;
     for(int i = 0; i < 6; i++)

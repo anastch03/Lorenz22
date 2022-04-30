@@ -1,4 +1,3 @@
-//g++ -std=c++11 -Wall -Werror -o L22 *.cpp
 /*
 File: L22.cpp
 Author: Anastasia Chen

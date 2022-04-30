@@ -31,11 +31,11 @@ public:
     static void convertToBinary(int num, std::vector<int> *bitVect);
     static int binaryToDec(std::vector<int> *bitVect);
     static std::string decToHex(int decimal);
-    std::string decrypt(std::string cipherText); //TODO
+    std::string decrypt(std::string cipherText); 
     static std::string decrypt_helper();
-    void test(std::string setting); //TODO
+    void test(std::string setting); 
     Mapper* getMapper(){return mapper;} 
-    void settings(const char * settings); //TODO
+    void settings(const char * settings); 
     void setVerbose(bool v){verbose = v;}
     bool get_verbose(){return verbose;}
     WheelAssembly *getWheelAssembly(){return wheelAssembly;}
