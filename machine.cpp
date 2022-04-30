@@ -38,13 +38,14 @@ void Machine::test(std::string setting){
   std::cout<< "Enter text to test:"<<std::endl;
   std::string plain_txt;
   std::getline(std::cin, plain_txt);
-  getWheelAssembly()->printAllWheels();
   std::string cipherTxt = encrypt(plain_txt);
-  Machine::settings(setting.c_str());
+  if(setting.compare(""))
+    Machine::settings(setting.c_str());
+  else  
+    getWheelAssembly()->resetWheels();
   getMapper()->resetMapper();
-  int count = 0;
   std::string decrypted = decrypt(cipherTxt);
-  count = 0;
+  int count = 0;
   for(char c : cipherTxt)
   {
       if (count == 5){
@@ -77,12 +78,10 @@ std::string Machine::decrypt_helper(){
     cipherText2+=c;
     count++;
   }
-  // std::cout<< "passed into decrypt: \n" << cipherText2 << "\n";
   return cipherText2;
 }
 
-std::string Machine::decrypt(std::string cipherText){ //TODO  
-  getMapper()->printMapping();
+std::string Machine::decrypt(std::string cipherText){ 
   std::string plain_txt;
   std::string toBeDecrypted = Mapper::fmap2_d(cipherText.c_str());
   if (get_verbose()){

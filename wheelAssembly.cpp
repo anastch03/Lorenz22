@@ -15,6 +15,7 @@ Date: 4/15/2022
 #include "wheelAssembly.h"
 #include <fstream>
 #include <string>
+#include <stdlib.h>
 
 std::vector<int> *WheelAssembly::getWheelVector(int w){
     std::vector<int> * vect = new std::vector<int>;
@@ -35,6 +36,10 @@ void WheelAssembly::readFile() {
             fileData.push_back(tp); //print the data of the string
         }
         file.close(); //close the file object.
+    }
+    else{
+        std::cout <<"wheel.txt does not exist.\n";
+        std::exit(0);
     }
 
     std::vector<std::string>::iterator itr = fileData.begin();
