@@ -25,13 +25,32 @@ void Machine::convertToBinary(int num, std::vector<int> *bitVect){ //takes an em
   convertToBinary(num/2, bitVect);
 }
 
-
 int Machine::binaryToDec(std::vector<int> *bitVect){
   int num = 0;
   for(int i = 0; i < 6; i++){
     num += bitVect->at(i) * pow(2, i);
   }
   return num;
+}
+
+//DECIMAL TO HEX FUNCTION FROM https://www.educative.io/edpresso/how-to-convert-a-number-from-decimal-to-hexadecimal-in-cpp
+std::string Machine::decToHex(int decimal){
+  int remainder, product = 1;
+  std::string hex_dec = "";
+  while (decimal != 0) {
+    remainder = decimal % 16;
+    char ch;
+    if (remainder >= 10)
+      ch = remainder + 55;
+    else
+      ch = remainder + 48;
+    hex_dec += ch;
+  
+    decimal = decimal / 16;
+    product *= 10;
+  }
+  reverse(hex_dec.begin(), hex_dec.end());
+  return hex_dec;
 }
 
 void Machine::test(std::string setting){
@@ -122,7 +141,7 @@ std::string Machine::decrypt(std::string cipherText){
     //increment wheels based on intermediate bits
     if(get_verbose())
     {
-      std::cout << (char)getMapper()->asciiToBit(c) << "=";
+      std::cout << decToHex(getMapper()->asciiToBit(c))<< "=";
       for(int b : *bits)
         std::cout<< b;
       std::cout << " "<<getWheelAssembly()->increment_i(*bits)<<std::endl;
@@ -144,8 +163,8 @@ std::string Machine::decrypt(std::string cipherText){
       std::cout<<"f-1("<< ibitsInHex << ")=" << (char)(getMapper()->Mapper::bitToAscii(dec-1))<<std::endl;
   }
   return plain_txt;
-
 }
+
 std::string Machine::encrypt(std::string plain_txt){ 
   std::string cipher_txt = "";
   if (get_verbose()){
@@ -209,14 +228,14 @@ std::string Machine::encrypt(std::string plain_txt){
     //rotate mapping 
     getMapper()->rotate();
 
-    if(get_verbose())
-      std::cout<<"f-1("<< ibitsInHex << ")=" << (char)(getMapper()->Mapper::bitToAscii(dec)-1)<<std::endl;
+    if(get_verbose()){
+      char ch = getMapper()->Mapper::bitToAscii(dec) - 1;
+      std::cout<<"f-1("<< ibitsInHex << ")= " << ch <<std::endl;
+    }
   }
-
   //convert any spaces in char vector to '-'
   const char *cipherTxtChar = cipher_txt.c_str();
   return Mapper::fmap2(cipherTxtChar);
-  
 }
 
 
@@ -249,24 +268,4 @@ void Machine::settings(const char * settings){
     k = (k+1)%3;
   }
   std::cout<<"\n";
-}
-
-//DECIMAL TO HEX FUNCTION FROM https://www.educative.io/edpresso/how-to-convert-a-number-from-decimal-to-hexadecimal-in-cpp
-std::string Machine::decToHex(int decimal){
-  int remainder, product = 1;
-  std::string hex_dec = "";
-  while (decimal != 0) {
-    remainder = decimal % 16;
-    char ch;
-    if (remainder >= 10)
-      ch = remainder + 55;
-    else
-      ch = remainder + 48;
-    hex_dec += ch;
-  
-    decimal = decimal / 16;
-    product *= 10;
-  }
-  reverse(hex_dec.begin(), hex_dec.end());
-  return hex_dec;
 }
