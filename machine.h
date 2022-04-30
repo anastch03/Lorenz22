@@ -27,7 +27,6 @@ public:
     }
     ~Machine(){}
     static void help(); 
-    
     std::string encrypt(std::string plain_txt); 
     static void convertToBinary(int num, std::vector<int> *bitVect);
     static int binaryToDec(std::vector<int> *bitVect);
@@ -36,7 +35,6 @@ public:
     static std::string decrypt_helper();
     void test(std::string setting); //TODO
     Mapper* getMapper(){return mapper;} 
-    void printWheelSettings(); 
     void settings(const char * settings); //TODO
     void setVerbose(bool v){verbose = v;}
     bool get_verbose(){return verbose;}

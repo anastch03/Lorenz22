@@ -33,7 +33,9 @@ int main (int argc, char *argv[]){
             m1->Machine::test(input.getCmdOption("-i").c_str());
         }
         else
+        {
             m1->Machine::test("");
+        }
     }
     else if(input.cmdOptionExists("-e")){ //encrypt mode
         if(input.cmdOptionExists("-d")){
@@ -68,21 +70,11 @@ int main (int argc, char *argv[]){
         {
             m1->Machine::settings(input.getCmdOption("-i").c_str());
         }
-        else   
-            m1->Machine::getWheelAssembly()->resetWheels();
-        // std::cout<< "Enter text to decrypt:"<<std::endl;
         std::cout<< m1->Machine::decrypt(Machine::decrypt_helper())<<std::endl;
     }
     else {
         std::cout<< "unknown arguments: " << argv[1]<< std::endl;
         Machine::help();
     }
-
-    
-    // else if(input.cmdOptionExists("-s")){
-    // const std::string &filename = input.getCmdOption("-f");
-    // if (!filename.empty()){
-    //     // Do interesting things ...
-    // }
 
 }

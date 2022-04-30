@@ -34,16 +34,28 @@ int Machine::binaryToDec(std::vector<int> *bitVect){
   return num;
 }
 
-void Machine::test(std::string setting){ 
+void Machine::test(std::string setting){
   std::cout<< "Enter text to test:"<<std::endl;
   std::string plain_txt;
   std::getline(std::cin, plain_txt);
+  getWheelAssembly()->printAllWheels();
   std::string cipherTxt = encrypt(plain_txt);
   Machine::settings(setting.c_str());
-  Machine::getWheelAssembly()->resetWheels();
-  std::string decrypted =  decrypt(cipherTxt);
-  std::cout << cipherTxt<<"\n";
-  std::cout << decrypted<<"\n";
+  getMapper()->resetMapper();
+  int count = 0;
+  std::string decrypted = decrypt(cipherTxt);
+  count = 0;
+  for(char c : cipherTxt)
+  {
+      if (count == 5){
+          count = 0;
+          std::cout << " ";
+      }
+      std::cout<< c;
+      count++;
+  }
+  std::cout<< "\n";
+  std::cout << decrypted <<std::endl;
   if(plain_txt.compare(decrypted) == 0)
     std::cout<<"String match\n";
   else
@@ -53,15 +65,32 @@ void Machine::test(std::string setting){
 std::string Machine::decrypt_helper(){
   std::cout<<"Enter text to decrypt:\n";
   std::string cipher_txt;
-  std::cin >> cipher_txt;
-  return cipher_txt;
+  std::getline(std::cin, cipher_txt);
+  int count = 0;
+  std::string cipherText2 ="";
+  for(char c : cipher_txt)
+  {
+    if (count == 5){
+        count = 0;
+        continue;
+    }
+    cipherText2+=c;
+    count++;
+  }
+  // std::cout<< "passed into decrypt: \n" << cipherText2 << "\n";
+  return cipherText2;
 }
 
 std::string Machine::decrypt(std::string cipherText){ //TODO  
+  getMapper()->printMapping();
   std::string plain_txt;
   std::string toBeDecrypted = Mapper::fmap2_d(cipherText.c_str());
+  if (get_verbose()){
+    getMapper()->printMapping();
+    getWheelAssembly()->printAllWheels();
+  }
   for(char c : toBeDecrypted){
-    //convert char to map number based on mapping & convert number to 6 bits and store in bit vector (lsb first)
+    //convert decrypted char to number based on mapping & convert number to 6 bits and store in bit vector (lsb first)
     std::vector<int> *bits = new std::vector<int>;
     std::vector<int> *intermBits = new std::vector<int>; 
     convertToBinary(getMapper()->asciiToBit(c), bits); //converts the mapper number to binary stored in bits vector
@@ -94,8 +123,8 @@ std::string Machine::decrypt(std::string cipherText){ //TODO
     //increment wheels based on intermediate bits
     if(get_verbose())
     {
-      std::cout << ibitsInHex << "=";
-      for(int b : *intermBits)
+      std::cout << (char)getMapper()->asciiToBit(c) << "=";
+      for(int b : *bits)
         std::cout<< b;
       std::cout << " "<<getWheelAssembly()->increment_i(*bits)<<std::endl;
       getWheelAssembly()->printAllWheels();
@@ -103,25 +132,21 @@ std::string Machine::decrypt(std::string cipherText){ //TODO
     else
       getWheelAssembly()->increment_i(*bits);
       
-    
-
     //convert intermediate bits to decimal number
     int dec = binaryToDec(intermBits);
 
     //convert decimal number to ascii with same mapping & 
     //add ascii char to string 
     plain_txt += getMapper()->Mapper::bitToAscii(dec);
-    //rotate mapping 
-      getMapper()->rotate();
 
+    //rotate mapping 
+    getMapper()->rotate();
     if(get_verbose())
       std::cout<<"f-1("<< ibitsInHex << ")=" << (char)(getMapper()->Mapper::bitToAscii(dec-1))<<std::endl;
   }
-  
   return plain_txt;
 
 }
-
 std::string Machine::encrypt(std::string plain_txt){ 
   std::string cipher_txt = "";
   if (get_verbose()){
@@ -210,7 +235,6 @@ void Machine::help(){
 }
 
 void Machine::settings(const char * settings){
-  std::cout << "settings: "<< settings <<"\n";
   const int MAX = 18;
   int j = 0;
   int k = 0;
